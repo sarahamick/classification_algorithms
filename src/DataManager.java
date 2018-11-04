@@ -5,7 +5,7 @@ import enums.*;
  * The DataManager class is used to convert the string data loaded in from the text file
  * to Mushroom objects.
  * The DataManager class makes use of the CSVFileReader class to accomplish this.
- *
+ * 
  */
 public class DataManager {
 

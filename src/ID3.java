@@ -2,6 +2,9 @@ import enums.Class_Label;
 import java.util.ArrayList;
 import java.util.*;
 
+**/
+@author: Sarah Amick
+\*
 public class ID3 {
 
   private Node root;

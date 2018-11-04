@@ -1,7 +1,9 @@
 import enums.Class_Label;
-
 import java.util.ArrayList;
 
+**/
+@author: Sarah Amick
+\*
 public class kNN {
 
     private ArrayList<Mushroom> data;

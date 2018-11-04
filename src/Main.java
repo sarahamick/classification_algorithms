@@ -5,6 +5,9 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Random;
 
+**/
+@author: Sarah Amick
+\*
 public class Main {
 	public static void main(String[] args) {
 
