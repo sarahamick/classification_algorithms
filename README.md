@@ -17,7 +17,6 @@ assigning it the most common class of the neighbors.
 Classifier #2: ID3 Decision Tree: Buids a decison tree using Information Gain to calculate splitting criteria. Predicts a
 tuple's class by traversing that tuple through the tree, and identifying the class of the leaf where it lands.
 
-To run: 
-  To run with kNN: $ java Main knn
-  To run with ID3 $ java Main id3
+To run with kNN: $ java Main knn  
+To run with ID3 $ java Main id3
   
