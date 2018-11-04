@@ -1,101 +1,25 @@
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
-import com.sun.tools.doclets.formats.html.SourceToHTMLConverter;
 import enums.*;
-
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Random;
 
-/**
- * Main class to run program from.
- */
 public class Main {
-
-	/**
-	 * @param args
-	 */
 	public static void main(String[] args) {
 
-		// First step - Load data and convert to Mushroom objects.
-		ArrayList<Mushroom> trainingMushrooms = DataManager.LoadData();
-		System.out.println("DataManager loaded "+trainingMushrooms.size() + " mushrooms");
+		boolean useKNN = false;
+		if(args[0].equals("knn")) useKNN = true; //else use ID3
 
+		//Load data and convert to Mushroom objects.
+		ArrayList<Mushroom> trainingMushrooms = DataManager.LoadData();
+		System.out.println("\nDataManager loading "+ trainingMushrooms.size() + " mushrooms...\n\nPartitioning into training and test sets...\n\nClassifying test set...\n");
+
+		//partition into test and train sets
 		ArrayList<Mushroom> testingMushrooms = new ArrayList<>();
 		for(int i = 0; i < 1000; i++) {
 			testingMushrooms.add(trainingMushrooms.get(i));
 			trainingMushrooms.remove(i);
-		}
-
-		List<Mushroom> smallTrainingSet = new ArrayList<>();
-		for(int i = 0; i < 10; i++){
-			smallTrainingSet.add(trainingMushrooms.get(i));
-		}
-
-		boolean useKNN = false;
-		boolean useID3 = true;
-
-		int successes = 0;
-		int classifiedCorrectlyEdible = 0;
-		int classifiedCorrectlyPoisonous = 0;
-		int failures = 0;
-		int classifiedPoisonousAndWasEdible = 0;
-		int classifiedEdibleAndWasPoisonous = 0;
-
-		int poisonousCount = 0;
-		int edibleCount = 0;
-
-		if(useKNN){
-			kNN kNN = new kNN(trainingMushrooms);
-
-			for(Mushroom mushroom : testingMushrooms){
-
-				boolean actual = getMushroomClassification(mushroom);
-				boolean result = kNN.classifyMushroom(mushroom);
-
-				if(result==true) poisonousCount++;
-				if(result==false) edibleCount++;
-
-				if(actual == result) successes++;
-				else failures++;
-			}
-		}
-
-		if(useID3){
-			ID3 ID3 = new ID3();
-			ID3.buildTree(smallTrainingSet);
-
-			for(Mushroom mushroom : testingMushrooms){
-
-				boolean actual = getMushroomClassification(mushroom);
-				boolean result = ID3.classifyMushroom(mushroom);
-
-				if(result==true) {
-					poisonousCount++;
-					if(actual == result) {
-						successes++;
-						classifiedCorrectlyPoisonous++;
-					}
-					else {
-						classifiedPoisonousAndWasEdible++;
-						failures++;
-					}
-				}
-
-				if(result==false) {
-					edibleCount++;
-					if(actual == result){
-						successes++;
-						classifiedCorrectlyEdible++;
-					}
-					else {
-						classifiedEdibleAndWasPoisonous++;
-						failures++;
-					}
-
-				}
-			}
 		}
 
 		int poisonousMushes = 0;
@@ -106,30 +30,38 @@ public class Main {
 			if(mushroom.getAttributeValue(Class_Label.class).toString().equals("poisonous")) poisonousMushes++;
 		}
 
-		System.out.println("# of poisonous testing mushrooms: " + poisonousMushes);
-		System.out.println("# of edible testing mushrooms: " + edibleMushes);
-		System.out.println();
+		//accuracy data
+		int successes = 0;
+		int failures = 0;
 
-		System.out.println("Predicted poisonous mushrooms (true): " + poisonousCount);
-		System.out.println("Prected edible mushrooms (false): " + edibleCount);
-		System.out.println();
+		if(useKNN){
+			kNN kNN = new kNN(trainingMushrooms);
+			for(Mushroom mushroom : testingMushrooms){
+				boolean actual = getMushroomClassification(mushroom);
+				boolean result = kNN.classifyMushroom(mushroom);
+				if(actual == result) successes++;
+				else failures++;
+			}
+		}
+		else{ //use ID3
+			ID3 ID3 = new ID3(trainingMushrooms);
 
-		System.out.println("SUCCESSES:");
-		System.out.println("Total successes: " + successes);
-		System.out.println("Successfully classfied poisonous: " + classifiedCorrectlyPoisonous);
-		System.out.println("Successfully classified edible: " + classifiedCorrectlyEdible);
-		System.out.println();
+			for(Mushroom mushroom : testingMushrooms){
+				boolean actual = getMushroomClassification(mushroom);
+				boolean result = ID3.classifyMushroom(mushroom);
 
-		System.out.println("FAILURES:");
-		System.out.println("Total failures : " + failures);
-		System.out.println("falsely classified: poisonous but were edible: " + classifiedPoisonousAndWasEdible);
-		System.out.println("falsely classified: edible but were poisonous: " + classifiedEdibleAndWasPoisonous);
-		System.out.println();
+				if(actual == result) successes++;
+				else failures++;
+			}
+		}
+		System.out.println("RESULTS:");
+		System.out.println("Num poisonous mushrooms in test set: " + poisonousMushes + "\nNum edible mushrooms test set: " + edibleMushes + "\n");
+		System.out.println("Num correctly classified: " + successes + "/" + testingMushrooms.size() + "\nNum incorrectly classified: " + failures + "/" + testingMushrooms.size() + "\n");
 
 	}
-
+	//returns true if edible, false if poisonous
 	private static boolean getMushroomClassification(Mushroom mushroom) {
-		if(mushroom.getAttributeValue(Class_Label.class).toString().equals("edible")) return false;
-		else return true;
+		if(mushroom.getAttributeValue(Class_Label.class).toString().equals("edible")) return true;
+		else return false;
 	}
 }

@@ -28,15 +28,15 @@ public class DataManager {
 	public static ArrayList<Mushroom> LoadData()
 	{
 		ArrayList<Mushroom> datalist = new ArrayList<Mushroom>();
-		
+
 		//First step load in data from the text file.
 		try {
-			String[][] data = CSVFileReader.readDataFile("Resources/agaricus-lepiotadata.txt", ",","", false);
-						
+			String[][] data = CSVFileReader.readDataFile("../Resources/agaricus-lepiotadata.txt", ",","", false);
+
 			for(int i = 0; i < data.length; i++)
 			{
 				Mushroom mushroomToAdd = new Mushroom();
-				
+
 				mushroomToAdd.m_Class = loadMushroomClass(data[i][0]);
 				mushroomToAdd.m_cap_shape = loadCapShape(data[i][1]);
 				mushroomToAdd.m_cap_surface = loadCapSurface(data[i][2]);
@@ -60,18 +60,18 @@ public class DataManager {
 				mushroomToAdd.m_spore_color = loadSporePrintColor(data[i][20]);
 				mushroomToAdd.m_population = loadPopulation(data[i][21]);
 				mushroomToAdd.m_habitat = loadHabitat(data[i][22]);
-				
+
 				datalist.add(mushroomToAdd);
-			}			
+			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return datalist;
-		
+
 	}
-	
+
 	private static Class_Label loadMushroomClass(String m_class)
 	{
 		if(m_class.equals("e"))
@@ -81,10 +81,10 @@ public class DataManager {
 		{
 			return Class_Label.poisonous;
 		}
-		
+
 		return null;
 	}
-	
+
 	private static Cap_Shape loadCapShape(String cap_shape)
 	{
 		if(cap_shape.equals("b"))
@@ -107,7 +107,7 @@ public class DataManager {
 		{
 			return Cap_Shape.sunken;
 		}
-		
+
 		return null; //INtentional, if we get down here something went wrong.
 	}
 
@@ -128,7 +128,7 @@ public class DataManager {
 		}
 		return null;
 	}
-	
+
 	private static Cap_Color loadCapColor(String cap_color)
 	{
 		if(cap_color.equals("n"))
@@ -173,7 +173,7 @@ public class DataManager {
 		}
 		return null;
 	}
-	
+
 	private static Bruises loadBruises(String bruises)
 	{
 		if(bruises.equals("t"))
@@ -185,9 +185,9 @@ public class DataManager {
 			return Bruises.no_bruises;
 		}
 		return null;
-		
+
 	}
-	
+
 	private static Odor loadOdor(String odor)
 	{
 		if(odor.equals("a"))
@@ -226,10 +226,10 @@ public class DataManager {
 		{
 			return Odor.spicy;
 		}
-		
+
 		return null;
 	}
-	
+
 	private static Gill_Attachment loadGillAttachment(String gill_att)
 	{
 		if(gill_att.equals("a"))
@@ -248,10 +248,10 @@ public class DataManager {
 		{
 			return Gill_Attachment.notched;
 		}
-		
+
 		return null;
 	}
-	
+
 	private static Gill_Spacing loadGillSpacing(String gill_space)
 	{
 		if(gill_space.equals("c"))
@@ -268,7 +268,7 @@ public class DataManager {
 		}
 		return null;
 	}
-	
+
 	private static Gill_Size loadGillSize(String gill_size)
 	{
 		if(gill_size.equals("b"))
@@ -279,7 +279,7 @@ public class DataManager {
 		{
 			return Gill_Size.narrow;
 		}
-		
+
 		return null;
 	}
 
@@ -288,7 +288,7 @@ public class DataManager {
 		if(gill_color.equals("k"))
 		{
 			return Gill_Color.black;
-		} 
+		}
 		else if(gill_color.equals("n"))
 		{
 			return Gill_Color.brown;
@@ -296,7 +296,7 @@ public class DataManager {
 		else if(gill_color.equals("b"))
 		{
 			return Gill_Color.buff;
-		} 
+		}
 		else if(gill_color.equals("h"))
 		{
 			return Gill_Color.chocolate;
@@ -333,10 +333,10 @@ public class DataManager {
 		{
 			return Gill_Color.yellow;
 		}
-		
+
 		return null;
 	}
-	
+
 	private static Stalk_Shape loadStalkShape(String stalk_shape)
 	{
 		if(stalk_shape.equals("e"))
@@ -347,10 +347,10 @@ public class DataManager {
 		{
 			return Stalk_Shape.tapering;
 		}
-		
+
 		return null;
 	}
-	
+
 	private static Stalk_Root loadStalkRoot(String stalk_root)
 	{
 		if(stalk_root.equals("b"))
@@ -381,10 +381,10 @@ public class DataManager {
 		{
 			return Stalk_Root.missing;
 		}
-		
+
 		return null;
 	}
-	
+
 	private static Stalk_Surface_Above_Ring loadStalkSurfaceAbove(String stalk_above)
 	{
 		if(stalk_above.equals("f"))
@@ -403,7 +403,7 @@ public class DataManager {
 		{
 			return Stalk_Surface_Above_Ring.smooth;
 		}
-		
+
 		return null;
 	}
 
@@ -425,14 +425,14 @@ public class DataManager {
 		{
 			return Stalk_Surface_Below_Ring.smooth;
 		}
-		
+
 		return null;
 	}
-	
+
 	private static Stalk_Color_Above_Ring loadStalkColorAbove(String stalk_color_above)
 	{
 		if(stalk_color_above.equals("n"))
-		{ 
+		{
 			return Stalk_Color_Above_Ring.brown;
 		}
 		else if(stalk_color_above.equals("b"))
@@ -442,7 +442,7 @@ public class DataManager {
 		else if(stalk_color_above.equals("c"))
 		{
 			return Stalk_Color_Above_Ring.cinnamon;
-		} 
+		}
 		else if(stalk_color_above.equals("g"))
 		{
 			return Stalk_Color_Above_Ring.gray;
@@ -467,14 +467,14 @@ public class DataManager {
 		{
 			return Stalk_Color_Above_Ring.yellow;
 		}
-		
+
 		return null;
 	}
-	
+
 	private static Stalk_Color_Below_Ring loadStalkColorBelow(String stalk_color_below)
 	{
 		if(stalk_color_below.equals("n"))
-		{ 
+		{
 			return Stalk_Color_Below_Ring.brown;
 		}
 		else if(stalk_color_below.equals("b"))
@@ -484,7 +484,7 @@ public class DataManager {
 		else if(stalk_color_below.equals("c"))
 		{
 			return Stalk_Color_Below_Ring.cinnamon;
-		} 
+		}
 		else if(stalk_color_below.equals("g"))
 		{
 			return Stalk_Color_Below_Ring.gray;
@@ -509,7 +509,7 @@ public class DataManager {
 		{
 			return Stalk_Color_Below_Ring.yellow;
 		}
-		
+
 		return null;
 	}
 
@@ -523,10 +523,10 @@ public class DataManager {
 		{
 			return Veil_Type.universal;
 		}
-		
+
 		return null;
 	}
-	
+
 	private static Veil_Color loadVeilColor(String veil_color)
 	{
 		if(veil_color.equals("n"))
@@ -545,7 +545,7 @@ public class DataManager {
 		{
 			return Veil_Color.yellow;
 		}
-		
+
 		return null;
 	}
 
@@ -563,10 +563,10 @@ public class DataManager {
 		{
 			return Ring_Number.two;
 		}
-		
+
 		return null;
 	}
-	
+
 	private static Ring_Type loadRingType(String ring_type)
 	{
 		if(ring_type.equals("c"))
@@ -601,10 +601,10 @@ public class DataManager {
 		{
 			return Ring_Type.pendant;
 		}
-		
+
 		return null;
 	}
-	
+
 	private static Spore_Print_Color loadSporePrintColor(String spore_color)
 	{
 		if(spore_color.equals("k"))
@@ -643,7 +643,7 @@ public class DataManager {
 		{
 			return Spore_Print_Color.yellow;
 		}
-		
+
 		return null;
 	}
 
@@ -673,7 +673,7 @@ public class DataManager {
 		{
 			return Population.solitary;
 		}
-		
+
 		return null;
 	}
 
@@ -707,19 +707,9 @@ public class DataManager {
 		{
 			return Habitat.woods;
 		}
-		
+
 		return null;
 	}
 
-	/**
-	 * Method which might be helpful for calculating information gain. Counts the number of
-	 * a specific Class label (e.g. poison or edible) appears in given data, when a specific Attribute has a specific value.
-	 * The method assumes that the attribute is nominal.
-	 * @param Data
-	 * @param Attribute Attribute we are calculating information gain for
-	 * @param AttributeValue What value of the attribute
-	 * @param Classification
-	 * @return
-	 */
-	
+
 }
